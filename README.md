@@ -30,7 +30,7 @@ $ npm stop
 
 ***
 
-写爬虫
+lesson3 写爬虫
 ==
 
 1. 安装  superagent 与 cheerio  `npm i superagent/cheerio  `
@@ -38,6 +38,8 @@ $ npm stop
 1. cheerio.load拿到html像jquery拼数据
 
 
+lesson4 eventproxy
+===
 
 
 
