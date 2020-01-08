@@ -46,7 +46,6 @@ class HomeController extends Controller {
 
 			let ep = new eventproxy();
 			ep.after('topic_html', topicUrls.length, (topics) => {
-
 				topics = topics.map((topicPair) => {
 					let topicUrl = topicPair[0];
 					let topicHtml = topicPair[1];
@@ -57,16 +56,27 @@ class HomeController extends Controller {
 						comment1: $('.reply_content').eq(0).text().trim()
 					});
 				});
-				console.log('final', topics);
+				console.log(topics);
+
 			});
 
-			topicUrls.forEach(topicUrl => {
-				let res = superagent.get(topicUrl);
-				ep.emit('topic_html', [topicUrl, res.text]);
+			//继发
+			// for (const topicUrl of topicUrls) {
+			// 	const res = await superagent.get(topicUrl);
+			// 	ep.emit('topic_html', [topicUrl, res.text]);
+			// }
+
+			//并发
+			topicUrls.forEach(function (topicUrl) {
+				superagent.get(topicUrl)
+					.end(function (err, res) {
+						console.log('fetch ' + topicUrl + ' successful');
+						ep.emit('topic_html', [topicUrl, res.text]);
+					});
 			});
 
+			ctx.body = 'hi'
 
-			ctx.body = topicUrls;
 		} catch (e) {
 			console.log(e);
 		}

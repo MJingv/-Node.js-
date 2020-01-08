@@ -41,9 +41,13 @@ lesson3 写爬虫
 lesson4 eventproxy
 ===
 
+foreach async 问题
+        
+        ok i know why... Using Babel will transform async/await to generator function and using forEach means that each iteration has an individual generator function, which has nothing to do with the others. so they will be executed independently and has no context of next() with others. Actually, a simple for() loop also works because the iterations are also in one single generator function
 
-
-
+forEach 实现不了 await
+for 循环 + await 并发为 1
+Promise.all + array.map 并发为 Infinity
 
 
 
